@@ -1,0 +1,201 @@
+<html>
+<head>
+	<title></title>
+	<script type="application/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="application/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+
+	<script type="application/javascript" src="js/timer.js"></script>
+	<script type="application/javascript">
+	$(document).ready(function() {
+
+			$('#add-timer').hide();
+
+			$('#btn-add').hover(function(e) {
+				$(this).css('border', '1px solid white');
+			}, function(e) {
+				$(this).css('border', '1px solid rgba(0, 0, 0, 0)');
+			}).click(function(e) {
+				$(this).hide();
+				$('#brand').hide();
+				$('#add-timer').show();
+			});
+
+			$('#add-timer-ok').click(function() {
+				$('#add-timer').hide();
+				$('#btn-add').show();
+				$('#brand').show();
+				var div = $('<div class="table"></div>');
+				div.css('opacity', 0.0);
+				$("#container-inner").append(div);
+				var date = new Date(0);
+
+				date.setUTCSeconds(parseInt($('#seconds').val()));
+				date.setUTCMinutes(parseInt($('#minutes').val()));
+				date.setUTCHours(parseInt($('#hours').val()));
+
+				(new timer.Application(
+					date.getTime(), 
+					$('#name').val(), 
+					$('#sound').attr('checked'),
+					div)).start();
+				div.animate({opacity: 1}, 'slow');
+			});
+
+			$('#add-timer-cancel').click(function() {
+				$('#add-timer').hide();
+				$('#btn-add').show();
+				$('#brand').show();
+			});
+
+			$('.tinput').keypress(function(event) {
+			  if ( event.which == 13 ) {
+			     event.preventDefault();
+			     $('#add-timer-ok').click();
+			   }
+			});
+
+			timer.Sound.Init();
+		});
+	</script>
+
+	<style>
+		body {
+			background-color: rgb(51, 51, 51);
+			background-image: url(img/backdrop.jpg);
+			background-repeat: no-repeat;
+		}
+
+		#container-outer {
+			text-align: center;
+			width: 100%;
+		}
+
+		#container-inner {
+			text-align: left;
+			width: 900px;
+		}
+
+		#header {
+			width: 100%;
+			height: 30px;
+		}
+
+		.tcon {
+			display: inline-block;
+			height: 220px;
+			vertical-align: bottom;
+			position: relative;
+			border-bottom: 1px dotted rgba(255, 1, 150, 0.8) ;
+			width: 400px;
+
+		}
+
+		.tnam {
+			position: relative;
+			vertical-align: bottom;
+			bottom: -140px;
+			text-align: left;
+			margin-left: 70px;
+			font-family: helvetica, verdana;
+			font-size: 32px;
+			color: rgba(255, 255, 255, 0.2);
+			font-weight: bold;
+		}
+
+		.tnam-name {
+			color: rgba(255, 255, 255, 0.5);
+		}
+
+		.tnam-time {
+			color: rgba(255, 255, 255, 0.2);
+		}
+
+		#brand {
+			height: 30px;
+			font-weight: bold;
+			color: #eeeeee;
+			line-height: 25px;
+			font-family: helvetica, verdana;
+			margin-left: 40px;
+		}
+
+		#btn-add {
+			width: 20px;
+			height: 20px;
+			text-align: center;
+			line-height: 20px;
+			color: white;
+			font-weight: bold;
+			border: 1px solid rgba(0, 0, 0, 0);
+			float: left;
+		}
+
+		#add-timer {
+			position: relative;
+			float: left;
+		}
+
+		.tinput {
+			width: 30px;
+			height: 20px;
+			border: 1px solid white;
+			background-color: rgba(0, 0, 0, 0);
+			color: white;
+			font-weight: bold;
+			font-family: helvetica;
+			text-align: center;
+			vertical-align: middle;
+			font-size: 11px;
+			display: inline-block;
+			line-height: 20px;
+			margin: 0;
+			padding: 0;
+		}
+
+		.tinputname {
+			width: 100px;
+		}
+
+		.table {
+			position: relative;
+			text-align: center;
+			float: left;
+			margin-left: 100px;
+			margin-top: 30px;
+		}
+
+		.gauge {
+			vertical-align: middle;
+		}
+
+		.value {
+			font-family: helvetica, verdana;
+			color : #fff;
+			letter-spacing: 1px;
+			font-size: 22px;
+			border-bottom: 1px dotted rgba(255, 1, 150, 0.8) ;
+		}
+
+	</style>
+	
+</head>
+<body>
+	<div id="container-outer">
+		<div id="container-inner">
+			<div id="header">
+				<div id="btn-add">+</div>
+				<div id="add-timer">
+					<input class='tinput tinputname' type="text" id="name" value="Countdown"></input> 
+					<input class='tinput' type="text" id="hours" value="0"></input>
+					<input class='tinput' type="text" id="minutes" value="5"></input>
+					<input class='tinput' type="text" id="seconds" value="0"></input>
+					<input class='tinput' name="sound" type="checkbox" id="sound" value="yes" checked></input>
+					<div class='tinput' id='add-timer-ok'>OK</div>
+					<div class='tinput' id='add-timer-cancel'>C</div>
+				</div>
+				<div id='brand'>Timer</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
