@@ -88,8 +88,14 @@ timer.Application.prototype.appendUI = function(name, time) {
 timer.Application.prototype.loop = function() {
 
 	if(this.objects.length != 0) {
+		//First do updates...
 		for(var i = 0; i < this.objects.length; i++) {
 			this.objects[i].update();
+		}
+
+		//...then render. This ensures that the gauges are 
+		//actually clean on finish (no residues from rounding errors).
+		for(var i = 0; i < this.objects.length; i++) {
 			this.objects[i].render(this.context);
 		}
 	}
