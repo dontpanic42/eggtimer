@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title></title>
@@ -62,7 +63,6 @@
 	<style>
 		body {
 			background-color: rgb(51, 51, 51);
-			background-image: url(img/backdrop.jpg);
 			background-repeat: no-repeat;
 		}
 
@@ -86,7 +86,7 @@
 			height: 220px;
 			vertical-align: bottom;
 			position: relative;
-			border-bottom: 1px dotted rgba(255, 1, 150, 0.8) ;
+			border-bottom: 1px solid rgba(255, 1, 150, 0.8) ;
 			width: 400px;
 
 		}
@@ -112,23 +112,22 @@
 		}
 
 		#brand {
-			height: 30px;
+			height: 24px;
 			font-weight: bold;
 			color: #eeeeee;
-			line-height: 25px;
+			line-height: 24px;
 			font-family: helvetica, verdana;
 			margin-left: 40px;
+			font-size: 24px;
+			padding-top: 3px;
 		}
 
 		#btn-add {
-			width: 20px;
-			height: 20px;
-			text-align: center;
-			line-height: 20px;
-			color: white;
-			font-weight: bold;
 			border: 1px solid rgba(0, 0, 0, 0);
 			float: left;
+			background-image: url(img/plus_24.png);
+			width: 24px;
+			height: 24px;
 		}
 
 		#add-timer {
@@ -138,7 +137,7 @@
 
 		.tinput {
 			width: 30px;
-			height: 20px;
+			height: 24px;
 			border: 1px solid white;
 			background-color: rgba(0, 0, 0, 0);
 			color: white;
@@ -148,7 +147,7 @@
 			vertical-align: middle;
 			font-size: 11px;
 			display: inline-block;
-			line-height: 20px;
+			line-height: 24px;
 			margin: 0;
 			padding: 0;
 		}
@@ -173,8 +172,51 @@
 			font-family: helvetica, verdana;
 			color : #fff;
 			letter-spacing: 1px;
-			font-size: 22px;
+			font-size: 28px;
+			font-weight: bold;
 			border-bottom: 1px dotted rgba(255, 1, 150, 0.8) ;
+		}
+
+		.btn-close {
+			position: absolute;
+			right: 0px;
+			width: 24px;
+			height: 24px;
+			background-image: url(img/delete_24.png);
+		}
+
+		.btn-audio-on {
+			position: absolute;
+			right: 0px;
+			top: 32px;
+			width: 24px;
+			height: 24px;
+			background-image: url(img/alarm_check_24.png);
+		}
+
+		.btn-audio-off {
+			position: absolute;
+			right: 0px;
+			top: 32px;
+			width: 24px;
+			height: 24px;
+			background-image: url(img/alarm_off_24.png);
+		}
+
+		#add-timer-ok {
+			margin-left: 20px;
+			background-image: url(img/checkmark_24.png);
+			width: 24px;
+			border: 0px;
+			background-repeat: no-repeat;
+		}
+
+		#add-timer-cancel {
+			background-image: url(img/delete_24.png);
+			width: 24px;
+			border: 0px;
+			background-repeat: no-repeat;
+			margin-left: 10px;
 		}
 
 	</style>
@@ -184,15 +226,15 @@
 	<div id="container-outer">
 		<div id="container-inner">
 			<div id="header">
-				<div id="btn-add">+</div>
+				<div id="btn-add"></div>
 				<div id="add-timer">
+					<input class='tinput' name="sound" type="checkbox" id="sound" value="yes" checked></input>
 					<input class='tinput tinputname' type="text" id="name" value="Countdown"></input> 
 					<input class='tinput' type="text" id="hours" value="0"></input>
 					<input class='tinput' type="text" id="minutes" value="5"></input>
 					<input class='tinput' type="text" id="seconds" value="0"></input>
-					<input class='tinput' name="sound" type="checkbox" id="sound" value="yes" checked></input>
-					<div class='tinput' id='add-timer-ok'>OK</div>
-					<div class='tinput' id='add-timer-cancel'>C</div>
+					<div class='tinput' id='add-timer-ok'></div>
+					<div class='tinput' id='add-timer-cancel'></div>
 				</div>
 				<div id='brand'>Timer</div>
 			</div>

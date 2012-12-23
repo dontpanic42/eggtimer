@@ -78,6 +78,41 @@ timer.Application.prototype.appendUI = function(name, time) {
 	var tdivc = $('<div class="tcon"></div>');
 	var tdivn = $('<div class="tnam"><span class="tnam-name">' + name + '</span><br><span class="tnam-time">' + time + '</span></div>');
 
+	var self = this;
+
+	var divx = $('<div class="btn-close"></div>')
+	.click(function () {
+		self.stop();
+		self.target.remove();
+	})
+	.css({opacity: 0});
+
+	var divm = $('<div class="btn-audio-' + ((this.playSound)? 'on' : 'off') + '"></div>')
+	.click(function (){
+		var div = $(this);
+		if(self.playSound) {
+			div.removeClass('btn-audio-on')
+			.addClass('btn-audio-off');
+			self.playSound = false;
+		} else {
+			div.removeClass('btn-audio-off')
+			.addClass('btn-audio-on');
+			self.playSound = true;
+		}
+	})
+	.css({opacity: 0});
+
+	this.target.hover(function() {
+		divm.stop().animate({opacity: 1}, 'slow');
+		divx.stop().animate({opacity: 1}, 'slow');
+	}, function() {
+		divm.stop().animate({opacity: 0}, 'slow');
+		divx.stop().animate({opacity: 0}, 'slow');
+	})
+
+	tdivc.append(divx);
+	tdivc.append(divm);
+
 	tdivc.append(tdivn);
 	div.append(tdivc);
 
