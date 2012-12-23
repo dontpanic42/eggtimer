@@ -207,6 +207,21 @@ timer.Render.Timer = function(mseconds, canvas, app) {
 			pieOffset : theme.caPieOffset,
 			pieColor : theme.caPieColor
 	}));
+
+	app.objects.push(
+		this.cu = new timer.Render.Circle({
+			x : x,
+			y : y + (y / 2),
+			radius : theme.cuRadius,
+			bgcolor : theme.cuBgColor ,
+			color : theme.cuColor,
+			reverse : true,
+			negate : true,
+			pie : true,
+			pieOffset : theme.cuPieOffset,
+			pieColor : theme.cuPieColor,
+			border: theme.cuBorder
+	}));
 }
 
 timer.Render.Timer.prototype.update = function() {
@@ -225,18 +240,23 @@ timer.Render.Timer.prototype.update = function() {
 	var sp = (((date.getUTCSeconds() * 1000) + date.getUTCMilliseconds()) / 60000) * 100;
 	var mp = (((date.getUTCMinutes() * 60) + date.getUTCSeconds()) / (60*60)) * 100;
 	var ap = (this.counter / this.original) * 100;
+	var up = (date.getUTCMilliseconds() / 1000) * 100;
 
 	if(sp > this.lsp)
 		this.cs.options.reverse = !this.cs.options.reverse;	
 	if(mp > this.lmp)
 		this.cm.options.reverse = !this.cm.options.reverse;
+	if(up > this.lup)
+		this.cu.options.reverse = !this.cu.options.reverse;
 
 	this.lsp = sp;
 	this.lmp = mp;
+	this.lup = up;
 
 	this.cs.setPercent(sp);
 	this.cm.setPercent(mp);
 	this.ca.setPercent(ap);
+	this.cu.setPercent(up);
 
 	this.app.jq_span.html(timer.Render.dateToString(date));
 }
@@ -247,6 +267,7 @@ timer.Render.Timer.prototype.finish = function() {
 		this.cs.setPercent(0);
 		this.cm.setPercent(0);
 		this.ca.setPercent(0);
+		this.cu.setPercent(0);
 		setTimeout((function() {
 			this.app.target.effect('shake', {times: 5}, 500);
 		}).bind(this), 0);

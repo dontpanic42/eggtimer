@@ -10,6 +10,19 @@ var theme = {
 	// "Pie-Chart" offset
 	caPieOffset : 16,
 
+	// Milliseconds radius
+	cuRadius : 14,
+	// Milliseconds foreground color
+	cuColor : 'rgba(255, 255, 255, 0.1)',
+	// Milliseconds background color
+	cuBgColor : 'rgba(255, 255, 255, 0.05)',
+	// Milliseconds border size
+	cuBorder : 2,
+	// Milliseconds pie offset
+	cuPieOffset : 4,
+	// Milliseconds pie color
+	cuPieColor : 'rgba(255, 255, 255, 0.05)',
+
 	// Ring colors
 	// Foreground color
 	csColor : 'rgb(41, 217, 244)',
