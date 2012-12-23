@@ -201,7 +201,7 @@ timer.Render.Timer.prototype.update = function() {
 }
 
 //Called when countdown has finished.
-timer.Render.prototype.finish = function() {
+timer.Render.Timer.prototype.finish = function() {
 		this.app.jq_span.html("00:00:00");
 		this.cs.setPercent(0);
 		this.cm.setPercent(0);
