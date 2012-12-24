@@ -46,14 +46,15 @@ timer.Application = function(mseconds, name, playSound, target) {
 	//holds all the render objects
 	this.objects = [];
 	//push "clear" so every cycle the canvas will be blanced
+
 	this.objects.push(new timer.Render.Clear(canvas, null));
 	//push the "Timer" object
-	this.objects.push(new timer.Render.Timer(mseconds, canvas, this));
+	this.objects.push(this.timer = new timer.Render.Timer(mseconds, canvas, this));
 
-	this.running = true;
 	// target stage area
 	this.target = target;
 	this.playSound = playSound;
+	this.paused = false;
 
 	this.canvas = canvas;
 	this.context = canvas.getContext("2d");
@@ -102,16 +103,34 @@ timer.Application.prototype.appendUI = function(name, time) {
 	})
 	.css({opacity: 0});
 
+	var divp = $('<div class="btn-timer-pause"></div>');
+	divp.click(function () {
+		var div = $(this);
+		if(self.timer.paused) {
+			div.removeClass('btn-timer-resume')
+			.addClass('btn-timer-pause');
+			self.timer.resume();
+		} else {
+			div.removeClass('btn-timer-pause')
+			.addClass('btn-timer-resume');
+			self.timer.pause();
+		}
+	})
+	.css({opacity: 0});
+
 	this.target.hover(function() {
 		divm.stop().animate({opacity: 1}, 'slow');
 		divx.stop().animate({opacity: 1}, 'slow');
+		divp.stop().animate({opacity: 1}, 'slow');
 	}, function() {
 		divm.stop().animate({opacity: 0}, 'slow');
 		divx.stop().animate({opacity: 0}, 'slow');
+		divp.stop().animate({opacity: 0}, 'slow');
 	})
 
 	tdivc.append(divx);
 	tdivc.append(divm);
+	tdivc.append(divp);
 
 	tdivc.append(tdivn);
 	div.append(tdivc);
@@ -171,6 +190,8 @@ timer.Render.Timer = function(mseconds, canvas, app) {
 	this.counter  = mseconds;
 	this.last = new Date().getTime();
 	this.app = app;
+	this.paused = false;
+	this.pauseDate = null;
 
 	var x = canvas.width / 2, y = canvas.height / 2;
 
@@ -224,7 +245,20 @@ timer.Render.Timer = function(mseconds, canvas, app) {
 	}));
 }
 
+timer.Render.Timer.prototype.pause = function() {
+	this.paused = true;
+	this.pauseDate = (new Date().getTime());
+}
+
+timer.Render.Timer.prototype.resume = function() {
+	var now = (new Date()).getTime();
+	this.last += (now - this.pauseDate);
+	this.paused = false;
+}
+
 timer.Render.Timer.prototype.update = function() {
+	if(this.paused) return;
+
 	this.counter = this.original - ((new Date()).getTime() - this.last);
 	var date = new Date(this.counter);
 
