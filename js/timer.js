@@ -118,19 +118,37 @@ timer.Application.prototype.appendUI = function(name, time) {
 	})
 	.css({opacity: 0});
 
+	// var divr = $('<div class="btn-timer-reset"></div>');
+	// divr.click(function() {
+	// 	self.timer.reset();
+	// 	self.timer.resume();
+
+	// 	// Run the renderloop 1 time to update the graphics
+	// 	self.running = false;
+	// 	self.loop();
+	// 	self.loop();
+
+	// 	self.timer.pause();
+	// 	self.start();
+	// })
+	// .css({opacity: 0});
+
 	this.target.hover(function() {
 		divm.stop().animate({opacity: 1}, 'slow');
 		divx.stop().animate({opacity: 1}, 'slow');
 		divp.stop().animate({opacity: 1}, 'slow');
+		// divr.stop().animate({opacity: 1}, 'slow');
 	}, function() {
 		divm.stop().animate({opacity: 0}, 'slow');
 		divx.stop().animate({opacity: 0}, 'slow');
 		divp.stop().animate({opacity: 0}, 'slow');
+		// divr.stop().animate({opacity: 0}, 'slow');
 	})
 
 	tdivc.append(divx);
 	tdivc.append(divm);
 	tdivc.append(divp);
+	// tdivc.append(divr);
 
 	tdivc.append(tdivn);
 	div.append(tdivc);
@@ -254,6 +272,10 @@ timer.Render.Timer.prototype.resume = function() {
 	var now = (new Date()).getTime();
 	this.last += (now - this.pauseDate);
 	this.paused = false;
+}
+
+timer.Render.Timer.prototype.reset = function() {
+	this.last = (new Date()).getTime();
 }
 
 timer.Render.Timer.prototype.update = function() {
